@@ -63,12 +63,13 @@
             // For each <td> that has a data-field in the <tr> do the following  
             $('td[data-field]', this.element).each(function () {
 
-                //Note that $(this) here means the <td> that is being iterated
+                // Note that $(this) here means the <td> that is being iterated
                 // field --> data-field ie dataKey, value --> value displayed within <td>
                 var input,
                     field = $(this).data('field'),
                     value = $(this).text(),
-                    width = $(this).width();
+                    width = $(this).width(),
+                    dropdownOptions = $(this).data('options');
 
                 // Save initial or old values in the values object    
                 values[field] = value;
@@ -81,12 +82,12 @@
                 }
 
                 // E.g options = { dropdowns : { sex: ['male', 'female'] } }
-                if (field in instance.options.dropdowns) {
+                if (field in instance.options.dropdowns && dropdownOptions) {
                     input = $('<select></select>');
 
-                    for (var i = 0; i < instance.options.dropdowns[field].length; i++) {
+                    for (var i = 0; i < dropdownOptions.length; i++) {
                         $('<option></option>')
-                            .text(instance.options.dropdowns[field][i])
+                            .text(dropdownOptions[i])
                             .appendTo(input);
                     };
 
@@ -97,15 +98,18 @@
                         .data('old-value', value)
                         .dblclick(instance._captureEvent);
 
+                    input.appendTo(this);
+
                 } else {
 
                     input = $('<input type="text" />')
                         .val(value)
                         .data('old-value', value)
                         .dblclick(instance._captureEvent);
+
+                    input.appendTo(this);
                 }
 
-                input.appendTo(this);
 
                 // If keyboard events are enabled, bind eventhandlers to <tr>
                 if (instance.options.keyboard) {
@@ -120,22 +124,27 @@
 
         save: function () {
             var instance = this,
+                oldValues = {},
                 values = {};
 
             // Foreach <td> with a 'data-field' on this.element --> <tr>    
             $('td[data-field]', this.element).each(function () {
                 // Get input values
                 var value = $(':input', this).val();
+                // Get old alues, so we can revert if `SAVE` fails
+                var oldValue = $(':input', this).data('old-value');
 
                 // Store input values in object with approate key
                 values[$(this).data('field')] = value;
+                // Store old values
+                oldValues[$(this).data('field')] = oldValue;
 
                 // Empty <td> and replace it's text with new values
                 $(this).empty()
                     .text(value);
             });
 
-            this.options.save.bind(this.element)(values);
+            this.options.save.bind(this.element)(oldValues, values);
         },
 
         cancel: function () {

@@ -95,19 +95,24 @@
           <table class="u-full-width demo">
             <thead>
               <tr>
+                <th>Id</th>
                 <th>Name</th>
-                <th>Birthday</th>
-                <th>Age</th>
-                <th>Sex</th>
+                <th>Customer Type</th>
+                <th>Active</th>
                 <th>Edit</th>
               </tr>
             </thead>
             <tbody>
               <tr data-id="1">
-                <td data-field="name">Dave Gamache</td>
-                <td data-field="birthday">May 19, 2015</td>
-                <td data-field="age">26</td>
-                <td data-field="sex">Male</td>
+                <td data-field="id">1</td>
+                <td data-field="name">Customer 1</td>
+                <td data-field="customerType">Type A</td>
+                <td data-field="active">
+                  <input type="checkbox"
+                         name="active"
+                         value="active"
+                         checked>
+                </td>
                 <td>
                   <a class="button button-small edit"
                      title="Edit">
@@ -116,10 +121,32 @@
                 </td>
               </tr>
               <tr data-id="2">
-                <td data-field="name">Dwayne Johnson</td>
-                <td data-field="birthday">May 19, 2015</td>
-                <td data-field="age">42</td>
-                <td data-field="sex">Male</td>
+                <td data-field="id">1</td>
+                <td data-field="name">Customer 2</td>
+                <td data-field="customerType">Type B</td>
+                <td data-field="active">
+                  <input type="checkbox"
+                         name="active"
+                         value="active">
+                </td>
+                <td>
+                  <a class="button button-small edit"
+                     title="Edit">
+                    <i class="fa fa-pencil"></i>
+                  </a>
+                </td>
+              </tr>
+              <tr data-id="3">
+                <td data-field="id">3</td>
+                <td data-field="name">Customer 3</td>
+                <td data-field="customerType"
+                    data-options='["Type A", "Type B", "Type C"]'>Type A</td>
+                <td data-field="active">
+                  <input type="checkbox"
+                         name="active"
+                         value="active"
+                         checked>
+                </td>
                 <td>
                   <a class="button button-small edit"
                      title="Edit">
@@ -203,7 +230,10 @@
 
         $('table tr').editable({
           dropdowns: {
-            sex: ['Male', 'Female']
+            customerType: true
+          },
+          checkboxes: {
+            active: true
           },
           edit: function (values) {
             $(".edit i", this)
@@ -216,7 +246,7 @@
               format: 'MMM D, YYYY'
             });
           },
-          save: function (values) {
+          save: function (oldValues, values) {
             $(".edit i", this)
               .removeClass('fa-save')
               .addClass('fa-pencil')
