@@ -6,6 +6,7 @@
             dblclick: true,
             button: true,
             buttonSelector: ".edit",
+            cancelSelector: ".cancel",
             maintainWidth: true,
             dropdowns: {},
             edit: function () { },
@@ -74,15 +75,14 @@
                 // Save initial or old values in the values object    
                 values[field] = value;
 
-                // Empty <td> for new DOM elements
-                $(this).empty();
-
                 if (instance.options.maintainWidth) {
                     $(this).width(width);
                 }
 
                 // E.g options = { dropdowns : { sex: ['male', 'female'] } }
                 if (field in instance.options.dropdowns && dropdownOptions) {
+                    // Empty <td> for new DOM elements
+                    $(this).empty();
                     input = $('<select></select>');
 
                     for (var i = 0; i < dropdownOptions.length; i++) {
@@ -100,8 +100,18 @@
 
                     input.appendTo(this);
 
+                } else if (field in instance.options.checkboxes) {
+                    // Enable checkbox
+                    input = $(':checkbox', this);
+                    input.attr('disabled', false);
+                    values[field] = input.is(':checked') ? input.val() : null;
+
+                    input.data('old-value', values[field])
+                        .dblclick(instance._captureEvent);
+
                 } else {
 
+                    $(this).empty();
                     input = $('<input type="text" />')
                         .val(value)
                         .data('old-value', value)
@@ -130,18 +140,24 @@
             // Foreach <td> with a 'data-field' on this.element --> <tr>    
             $('td[data-field]', this.element).each(function () {
                 // Get input values
-                var value = $(':input', this).val();
-                // Get old alues, so we can revert if `SAVE` fails
-                var oldValue = $(':input', this).data('old-value');
+                var value = $(':input', this).val(),
+                    // Get old alues, so we can revert if `SAVE` fails
+                    oldValue = $(':input', this).data('old-value'),
+                    field = $(this).data('field');
 
                 // Store input values in object with approate key
-                values[$(this).data('field')] = value;
+                values[field] = value;
                 // Store old values
-                oldValues[$(this).data('field')] = oldValue;
+                oldValues[field] = oldValue;
 
-                // Empty <td> and replace it's text with new values
-                $(this).empty()
-                    .text(value);
+                // Empty <td> and replace it's text with new values if it's not a checkbox
+                if (!instance.options.checkboxes.hasOwnProperty(field)) {
+                    $(this).empty()
+                        .text(value);
+                } else {
+                    // Disable checkbox
+                    $(':checkbox', this).attr('disabled', true);
+                }
             });
 
             this.options.save.bind(this.element)(oldValues, values);
@@ -152,12 +168,18 @@
                 values = {};
 
             $('td[data-field]', this.element).each(function () {
-                var value = $(':input', this).data('old-value');
+                var value = $(':input', this).data('old-value'),
+                    field = $(this).data('field');
 
-                values[$(this).data('field')] = value;
+                values[field] = value;
 
-                $(this).empty()
-                    .text(value);
+                if (!instance.options.checkboxes.hasOwnProperty(field)) {
+                    $(this).empty()
+                        .text(value);
+                } else {
+                    $(':checkbox', this).val(value);
+                    $(':checkbox', this).attr('disabled', true);
+                }
             });
 
             this.options.cancel.bind(this.element)(values);
