@@ -15,7 +15,9 @@
 
     // Function constructor --- new Editable(...)
     function Editable(element, options) {
+        // Since this is called for each <tr>, this.element points to each <tr> 
         this.element = element;
+        // Works like the ES6 spread operator
         this.options = $.extend({}, defaults, options);
 
         this._defaults = defaults;
@@ -29,11 +31,13 @@
             this.editing = false;
 
             if (this.options.dblclick) {
+                // Bind the dbclick event to the <tr>
                 $(this.element)
                     .css('cursor', 'pointer')
                     .bind('dblclick', this.toggle.bind(this));
             }
 
+            // Bind '.edit' to the click event
             if (this.options.button) {
                 $(this.options.buttonSelector, this.element)
                     .bind('click', this.toggle.bind(this));
@@ -56,20 +60,27 @@
             var instance = this,
                 values = {};
 
+            // For each <td> that has a data-field in the <tr> do the following  
             $('td[data-field]', this.element).each(function () {
+
+                //Note that $(this) here means the <td> that is being iterated
+                // field --> data-field ie dataKey, value --> value displayed within <td>
                 var input,
                     field = $(this).data('field'),
                     value = $(this).text(),
                     width = $(this).width();
 
+                // Save initial or old values in the values object    
                 values[field] = value;
 
+                // Empty <td> for new DOM elements
                 $(this).empty();
 
                 if (instance.options.maintainWidth) {
                     $(this).width(width);
                 }
 
+                // E.g options = { dropdowns : { sex: ['male', 'female'] } }
                 if (field in instance.options.dropdowns) {
                     input = $('<select></select>');
 
@@ -79,10 +90,15 @@
                             .appendTo(input);
                     };
 
+                    // NOTE: jQuery returns the `input` object on every call to acheive method chaining
+                    // So here we assign `input` a value, we add the data attribute `data-old-value='value'` to input
+                    // And we prevent `dbClick` eventPropagation on input
                     input.val(value)
                         .data('old-value', value)
                         .dblclick(instance._captureEvent);
+
                 } else {
+
                     input = $('<input type="text" />')
                         .val(value)
                         .data('old-value', value)
@@ -91,11 +107,14 @@
 
                 input.appendTo(this);
 
+                // If keyboard events are enabled, bind eventhandlers to <tr>
                 if (instance.options.keyboard) {
                     input.keydown(instance._captureKey.bind(instance));
                 }
             });
 
+            // Create a new edit function, bind <tr> to its context so that its `this` points to <tr>, 
+            // call the returned function, passing `values` to it
             this.options.edit.bind(this.element)(values);
         },
 
@@ -103,11 +122,15 @@
             var instance = this,
                 values = {};
 
+            // Foreach <td> with a 'data-field' on this.element --> <tr>    
             $('td[data-field]', this.element).each(function () {
+                // Get input values
                 var value = $(':input', this).val();
 
+                // Store input values in object with approate key
                 values[$(this).data('field')] = value;
 
+                // Empty <td> and replace it's text with new values
                 $(this).empty()
                     .text(value);
             });
@@ -146,9 +169,17 @@
         }
     };
 
+    // Attach plugin to JQuery's prototype
+    // Accept options {...}
     $.fn[pluginName] = function (options) {
+        // `this` here, points to jQuery
+        // Iterate through returned <tr>
         return this.each(function () {
+
+            // `this` here refers to each <tr> 
             if (!$.data(this, "plugin_" + pluginName)) {
+                // new Editable() is being called for each <tr>
+                // $.data(<tr>, name, data)
                 $.data(this, "plugin_" + pluginName,
                     new Editable(this, options));
             }
