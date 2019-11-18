@@ -47,7 +47,7 @@ The only additional markup **Table Edits** requires is a `data-field` attribute 
 
 The last cell will not become editable because it does not have the `data-field` attribute.
 
-#### Saving Table Data
+#### Saving, Updating and Deleting Table Data
 
 Table Edits makes it easy to save edits. Callbacks are passed a `values` object with column names and values of the edited row.
 
