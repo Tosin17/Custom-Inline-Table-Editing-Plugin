@@ -166,6 +166,9 @@
             .empty()
             .text(value);
         } else {
+          // Update checkbox value
+          var input = $(':checkbox', this);
+          values[field] = input.is(':checked') ? input.val() : null;
           // Disable checkbox
           $(':checkbox', this).attr('disabled', true);
         }
