@@ -212,7 +212,7 @@
 
       $('td[data-field]', this.element).each(function() {
         // Get input values
-        var value = $(this).text(),
+        var value = $(this).text() || $(':input', this).val(),
           field = $(this).data('field');
 
         if (instance.options.checkboxes.hasOwnProperty(field)) {
