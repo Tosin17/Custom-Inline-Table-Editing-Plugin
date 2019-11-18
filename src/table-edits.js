@@ -5,13 +5,15 @@
             keyboard: true,
             dblclick: true,
             button: true,
-            buttonSelector: ".edit",
+            editSelector: ".edit",
             cancelSelector: ".cancel",
+            deleteSelector: ".delete",
             maintainWidth: true,
             dropdowns: {},
             edit: function () { },
             save: function () { },
-            cancel: function () { }
+            cancel: function () { },
+            delete: function () { }
         };
 
     // Function constructor --- new Editable(...)
@@ -40,8 +42,14 @@
 
             // Bind '.edit' to the click event
             if (this.options.button) {
-                $(this.options.buttonSelector, this.element)
+                $(this.options.editSelector, this.element)
                     .bind('click', this.toggle.bind(this));
+
+                $(this.options.cancelSelector, this.element)
+                    .bind('click', this.cancel.bind(this));
+
+                $(this.options.deleteSelector, this.element)
+                    .bind('click', this.delete.bind(this));
             }
         },
 
@@ -167,6 +175,12 @@
             var instance = this,
                 values = {};
 
+            if (!instance.editing) {
+                return;
+            }
+
+            instance.editing = false;
+
             $('td[data-field]', this.element).each(function () {
                 var value = $(':input', this).data('old-value'),
                     field = $(this).data('field');
@@ -185,6 +199,26 @@
             this.options.cancel.bind(this.element)(values);
         },
 
+        delete: function () {
+            var instance = this,
+                values = {};
+
+            $('td[data-field]', this.element).each(function () {
+                // Get input values
+                var value = $(this).text(),
+                    field = $(this).data('field');
+
+                if (instance.options.checkboxes.hasOwnProperty(field)) {
+                    var input = $(':checkbox', this);
+                    value = input.is(':checked') ? input.val() : null;
+                }
+
+                values[field] = value;
+            });
+
+            this.options.delete.bind(this.element)(values);
+        },
+
         _captureEvent: function (e) {
             e.stopPropagation();
         },
@@ -194,7 +228,6 @@
                 this.editing = false;
                 this.save();
             } else if (e.which === 27) {
-                this.editing = false;
                 this.cancel();
             }
         }

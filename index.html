@@ -19,10 +19,6 @@
     <link rel="stylesheet"
           href="bower_components/skeleton/css/skeleton.css">
     <link rel="stylesheet"
-          href="bower_components/pikaday/css/pikaday.css">
-    <link rel="stylesheet"
-          href="bower_components/pikaday-skeleton/css/pikaday-skeleton.css">
-    <link rel="stylesheet"
           href="bower_components/font-awesome/css/font-awesome.css">
 
     <style>
@@ -123,6 +119,10 @@
                      title="Cancel">
                     <i class="fa fa-times"></i>
                   </a>
+                  <a class="button button-small delete"
+                     title="Delete">
+                    <i class="fa fa-trash"></i>
+                  </a>
                 </td>
               </tr>
               <tr data-id="2">
@@ -143,6 +143,10 @@
                   <a class="button button-small cancel"
                      title="Cancel">
                     <i class="fa fa-times"></i>
+                  </a>
+                  <a class="button button-small delete"
+                     title="Delete">
+                    <i class="fa fa-trash"></i>
                   </a>
                 </td>
               </tr>
@@ -166,6 +170,10 @@
                   <a class="button button-small cancel"
                      title="Cancel">
                     <i class="fa fa-times"></i>
+                  </a>
+                  <a class="button button-small delete"
+                     title="Delete">
+                    <i class="fa fa-trash"></i>
                   </a>
                 </td>
               </tr>
@@ -202,7 +210,8 @@
     maintainWidth: true,
     edit: function(values) {},
     save: function(values) {},
-    cancel: function(values) {}
+    cancel: function(values) {},
+    delete: function(values) {}
 });</code></pre>
         </div>
       </div>
@@ -236,13 +245,9 @@
     </div>
 
     <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/momentjs/moment.js"></script>
-    <script src="bower_components/pikaday/pikaday.js"></script>
     <script src="src/table-edits.js"></script>
     <script>
       $(function () {
-        var pickers = {};
-
         $('table tr').editable({
           dropdowns: {
             customerType: true
@@ -256,10 +261,7 @@
               .addClass('fa-save')
               .attr('title', 'Save');
 
-            pickers[this] = new Pikaday({
-              field: $("td[data-field=birthday] input", this)[0],
-              format: 'MMM D, YYYY'
-            });
+            console.log(values);
           },
           save: function (oldValues, values) {
             $(".edit i", this)
@@ -267,10 +269,7 @@
               .addClass('fa-pencil')
               .attr('title', 'Edit');
 
-            if (this in pickers) {
-              pickers[this].destroy();
-              delete pickers[this];
-            }
+            console.log(values);
           },
           cancel: function (values) {
             $(".edit i", this)
@@ -278,10 +277,11 @@
               .addClass('fa-pencil')
               .attr('title', 'Edit');
 
-            if (this in pickers) {
-              pickers[this].destroy();
-              delete pickers[this];
-            }
+            console.log(values);
+          },
+          delete: function (values) {
+            console.log(values);
+            $(this).remove();
           }
         });
       });
