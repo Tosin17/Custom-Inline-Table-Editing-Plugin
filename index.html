@@ -83,11 +83,7 @@
       <div class="row">
         <div class="twelve columns"
              style="margin-top: 5%">
-          <h4>$.Table Edits</h4>
-          <p>
-            Table Edits is a light (1.7k) jQuery plugin for making table rows editable.
-            Built as minimally as possible so it's easy to extend.
-          </p>
+          <h4>Table Edit Custom Plugin for Timothy</h4>
           <table class="u-full-width demo">
             <thead>
               <tr>
@@ -102,7 +98,8 @@
               <tr data-id="1">
                 <td data-field="id">1</td>
                 <td data-field="name">Customer 1</td>
-                <td data-field="customerType">Type A</td>
+                <td data-field="customerType" 
+                    data-options='["Type A", "Type B", "Type C"]'>Type C</td>
                 <td data-field="active">
                   <input type="checkbox"
                          name="active"
@@ -128,7 +125,8 @@
               <tr data-id="2">
                 <td data-field="id">2</td>
                 <td data-field="name">Customer 2</td>
-                <td data-field="customerType">Type B</td>
+                <td data-field="customerType" 
+                    data-options='["Type A", "Type B", "Type C"]'>Type A</td>
                 <td data-field="active">
                   <input type="checkbox"
                          name="active"
@@ -154,7 +152,7 @@
                 <td data-field="id">3</td>
                 <td data-field="name">Customer 3</td>
                 <td data-field="customerType"
-                    data-options='["Type A", "Type B", "Type C"]'>Type A</td>
+                    data-options='["Type A", "Type B", "Type C"]'>Type B</td>
                 <td data-field="active">
                   <input type="checkbox"
                          name="active"
@@ -184,11 +182,11 @@
       <div class="row">
         <div class="six columns">
           <p>
-            <strong>Table Edits</strong> only does a couple things:
+            <strong>Table Edit</strong> does the following things:
             <ul>
               <li>Replaces cell values with input fields on edit</li>
               <li>Handles row editing state</li>
-              <li>Fires callbacks for edit, save and cancel</li>
+              <li>Fires callbacks for edit, save, delete and cancel</li>
             </ul>
             And <strong>optionally</strong>, a couple more:
             <br /><br />
@@ -205,7 +203,9 @@
     keyboard: true,
     dblclick: true,
     button: true,
-    buttonSelector: ".edit",
+    editSelector: '.edit',
+    cancelSelector: '.cancel',
+    deleteSelector: '.delete',
     dropdowns: {},
     maintainWidth: true,
     edit: function(values) {},
