@@ -1,4 +1,4 @@
-(function($, window, document, undefined) {
+(function ($, window, document, undefined) {
   var pluginName = 'editable',
     defaults = {
       keyboard: true,
@@ -9,10 +9,10 @@
       deleteSelector: '.delete',
       maintainWidth: true,
       dropdowns: {},
-      edit: function() {},
-      save: function() {},
-      cancel: function() {},
-      delete: function() {}
+      edit: function () { },
+      save: function () { },
+      cancel: function () { },
+      delete: function () { }
     };
 
   // Function constructor --- new Editable(...)
@@ -29,7 +29,7 @@
   }
 
   Editable.prototype = {
-    init: function() {
+    init: function () {
       this.editing = false;
 
       if (this.options.dblclick) {
@@ -56,9 +56,13 @@
           this.delete.bind(this)
         );
       }
+
+      // If row contains a checkbox, disable it...
+
+      // If row contains a select, detach it and display it's value in the <td> 
     },
 
-    toggle: function(e) {
+    toggle: function (e) {
       e.preventDefault();
 
       this.editing = !this.editing;
@@ -70,12 +74,12 @@
       }
     },
 
-    edit: function() {
+    edit: function () {
       var instance = this,
         values = {};
 
       // For each <td> that has a data-field in the <tr> do the following
-      $('td[data-field]', this.element).each(function() {
+      $('td[data-field]', this.element).each(function () {
         // Note that $(this) here means the <td> that is being iterated
         // field --> data-field ie dataKey, value --> value displayed within <td>
         var input,
@@ -93,8 +97,6 @@
 
         // E.g options = { dropdowns : { sex: ['male', 'female'] } }
         if (field in instance.options.dropdowns && dropdownOptions) {
-          // Empty <td> for new DOM elements
-          $(this).empty();
           input = $('<select></select>');
 
           for (var i = 0; i < dropdownOptions.length; i++) {
@@ -112,6 +114,7 @@
             .dblclick(instance._captureEvent);
 
           input.appendTo(this);
+
         } else if (field in instance.options.checkboxes) {
           // Enable checkbox
           input = $(':checkbox', this);
@@ -121,7 +124,9 @@
           input
             .data('old-value', values[field])
             .dblclick(instance._captureEvent);
+
         } else {
+
           $(this).empty();
           input = $('<input type="text" />')
             .val(value)
@@ -142,13 +147,13 @@
       this.options.edit.bind(this.element)(values);
     },
 
-    save: function() {
+    save: function () {
       var instance = this,
         oldValues = {},
         values = {};
 
       // Foreach <td> with a 'data-field' on this.element --> <tr>
-      $('td[data-field]', this.element).each(function() {
+      $('td[data-field]', this.element).each(function () {
         // Get input values
         var value = $(':input', this).val(),
           // Get old alues, so we can revert if `SAVE` fails
@@ -177,7 +182,7 @@
       this.options.save.bind(this.element)(oldValues, values);
     },
 
-    cancel: function() {
+    cancel: function () {
       var instance = this,
         values = {};
 
@@ -187,7 +192,7 @@
 
       instance.editing = false;
 
-      $('td[data-field]', this.element).each(function() {
+      $('td[data-field]', this.element).each(function () {
         var value = $(':input', this).data('old-value'),
           field = $(this).data('field');
 
@@ -206,11 +211,11 @@
       this.options.cancel.bind(this.element)(values);
     },
 
-    delete: function() {
+    delete: function () {
       var instance = this,
         values = {};
 
-      $('td[data-field]', this.element).each(function() {
+      $('td[data-field]', this.element).each(function () {
         // Get input values
         var value = $(this).text() || $(':input', this).val(),
           field = $(this).data('field');
@@ -226,11 +231,11 @@
       this.options.delete.bind(this.element)(values);
     },
 
-    _captureEvent: function(e) {
+    _captureEvent: function (e) {
       e.stopPropagation();
     },
 
-    _captureKey: function(e) {
+    _captureKey: function (e) {
       if (e.which === 13) {
         this.editing = false;
         this.save();
@@ -242,10 +247,10 @@
 
   // Attach plugin to JQuery's prototype
   // Accept options {...}
-  $.fn[pluginName] = function(options) {
+  $.fn[pluginName] = function (options) {
     // `this` here, points to jQuery
     // Iterate through returned <tr>
-    return this.each(function() {
+    return this.each(function () {
       // `this` here refers to each <tr>
       if (!$.data(this, 'plugin_' + pluginName)) {
         // new Editable() is being called for each <tr>

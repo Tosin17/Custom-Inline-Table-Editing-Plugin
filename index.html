@@ -93,8 +93,15 @@
               <tr data-id="1">
                 <td data-field="id">1</td>
                 <td data-field="name">Customer 1</td>
-                <td data-field="customerType" 
-                    data-options='["Type A", "Type B", "Type C"]'>Type C</td>
+                <td data-field="customerType">
+                  <select name="customerType">
+                    <option value="1">Type 1</option>
+                    <option selected="selected"
+                            value="2">Type 2</option>
+                    <option selected="selected"
+                            value="3">Type 3</option>
+                  </select>
+                </td>
                 <td data-field="active">
                   <input type="checkbox"
                          name="active"
@@ -120,8 +127,15 @@
               <tr data-id="2">
                 <td data-field="id">2</td>
                 <td data-field="name">Customer 2</td>
-                <td data-field="customerType" 
-                    data-options='["Type A", "Type B", "Type C"]'>Type A</td>
+                <td data-field="customerType">
+                  <select name="customerType">
+                    <option value="1">Type 1</option>
+                    <option selected="selected"
+                            value="2">Type 2</option>
+                    <option selected="selected"
+                            value="3">Type 3</option>
+                  </select>
+                </td>
                 <td data-field="active">
                   <input type="checkbox"
                          name="active"
@@ -146,8 +160,15 @@
               <tr data-id="3">
                 <td data-field="id">3</td>
                 <td data-field="name">Customer 3</td>
-                <td data-field="customerType"
-                    data-options='["Type A", "Type B", "Type C"]'>Type B</td>
+                <td data-field="customerType">
+                  <select name="customerType">
+                    <option value="1">Type 1</option>
+                    <option selected="selected"
+                            value="2">Type 2</option>
+                    <option selected="selected"
+                            value="3">Type 3</option>
+                  </select>
+                </td>
                 <td data-field="active">
                   <input type="checkbox"
                          name="active"
@@ -276,6 +297,9 @@
           },
           delete: function (values) {
             console.log(values);
+            confirm('Do you want to..' + values.id + values.name);
+            // Do delete ajax.
+            // If delete succeeds, then you remove
             $(this).remove();
           }
         });

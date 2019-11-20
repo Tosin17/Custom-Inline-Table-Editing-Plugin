@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta name="viewport"
+              content="width=device-width" />
+        <title>Index</title>
+        <style type="text/css">
+            body {
+                font-family: Arial;
+                font-size: 10pt;
+            }
+
+            .Grid {
+                border: 1px solid #ccc;
+                border-collapse: collapse;
+            }
+
+            .Grid th {
+                background-color: #F7F7F7;
+                font-weight: bold;
+            }
+
+            .Grid th,
+            .Grid td {
+                padding: 5px;
+                width: 150px;
+                border: 1px solid #ccc;
+            }
+
+            .Grid,
+            .Grid table td {
+                border: 0px solid #ccc;
+            }
+
+            .Grid th a,
+            .Grid th a:visited {
+                color: #333;
+            }
+        </style>
+    </head>
+
+    <body>
+        <table id="WebGrid"
+               class="Grid">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        id </th>
+                    <th scope="col">
+                        name </th>
+                    <th scope="col">
+                        customer type </th>
+                    <th scope="col">
+                        active </th>
+                    <th scope="col">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="CustomerID"><span>
+
+                            <span class="label">1</span>
+
+                            <input class="text"
+                                   type="text"
+                                   value="1"
+                                   style="display:none"
+                                   disabled="disabled" />
+
+                        </span>
+                    </td>
+                    <td class="Name"><span>
+
+                            <span class="label">Boss</span>
+
+                            <input class="text"
+                                   type="text"
+                                   value="Boss"
+                                   style="display:none" />
+
+                        </span>
+                    </td>
+                    <td class="CustomerType"><span>
+
+                            <select Style="display:none"
+                                    class="form-control ddlID  text CustomerTypesName"
+                                    id="CustomerTypeID"
+                                    name="Name">
+                                <option selected="selected"
+                                        value="2">Boss</option>
+                                <option value="1">Feing</option>
+                                <option value="1">ttt5</option>
+                            </select> <span class="ddlSaveId"
+                                  style="display:none"
+                                  name="Name"></span>
+                            <span class="form-control-label ddlName label CustomerTypeID"
+                                  style=""
+                                  name="Name">Boss</span>
+
+
+                        </span>
+                    </td>
+                    <td class="Active">
+
+
+
+                        <input type="checkbox"
+                               name="chkActive"
+                               class="label activelabel"
+                               disabled="disabled" />
+
+                        <input type="checkbox"
+                               class="chk text activetext"
+                               style="display:none"
+                               name="chkActive" />
+
+
+                    </td>
+                    <td>
+                        <span class="link">
+                            <a class="Edit"
+                               href="javascript:;">Edit</a>
+
+                            <a class="Delete"
+                               href="javascript:;">Delete</a>
+
+                            <a class="Update"
+                               href="javascript:;"
+                               style="display:none">Update</a>
+
+
+
+                            <a class="Cancel"
+                               href="javascript:;"
+                               style="display:none">Cancel</a>
+
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="CustomerID"><span>
+
+                            <span class="label">2</span>
+
+                            <input class="text"
+                                   type="text"
+                                   value="2"
+                                   style="display:none"
+                                   disabled="disabled" />
+
+                        </span>
+                    </td>
+                    <td class="Name">
+                        <span>
+                            <span class="label">Feing</span>
+                            <input class="text"
+                                   type="text"
+                                   value="Feing"
+                                   style="display:none" />
+                        </span>
+                    </td>
+                    <td class="CustomerType">
+                        <span>
+                            <select Style="display:none"
+                                    class="form-control ddlID  text CustomerTypesName"
+                                    id="CustomerTypeID"
+                                    name="Name">
+                                <option value="2">Boss</option>
+                                <option selected="selected"
+                                        value="1">Feing</option>
+                                <option selected="selected"
+                                        value="1">ttt5</option>
+                            </select>
+                            <span class="ddlSaveId"
+                                  style="display:none"
+                                  name="Name"></span>
+                            <span class="form-control-label ddlName label CustomerTypeID"
+                                  style=""
+                                  name="Name">Feing</span>
+                            <select Style="display:none"
+                                    class="form-control ddlID  text CustomerTypesName"
+                                    id="CustomerTypeID"
+                                    name="Name">
+                                <option value="2">Boss</option>
+                                <option selected="selected"
+                                        value="1">Feing</option>
+                                <option selected="selected"
+                                        value="1">ttt5</option>
+                            </select> <span class="ddlSaveId"
+                                  style="display:none"
+                                  name="Name"></span>
+                            <span class="form-control-label ddlName label CustomerTypeID"
+                                  style=""
+                                  name="Name">ttt5</span>
+
+                        </span>
+                    </td>
+                    <td class="Active">
+
+
+
+                        <input type="checkbox"
+                               name="chkActive"
+                               class="label activelabel"
+                               value="value"
+                               checked
+                               disabled="disabled" />
+
+                        <input type="checkbox"
+                               class="chk text activetext"
+                               style="display:none"
+                               name="chkActive"
+                               value="value"
+                               checked />
+
+
+                    </td>
+                    <td>
+                        <span class="link">
+
+                            <a class="Edit"
+                               href="javascript:;">Edit</a>
+
+                            <a class="Delete"
+                               href="javascript:;">Delete</a>
+
+                            <a class="Update"
+                               href="javascript:;"
+                               style="display:none">Update</a>
+
+
+
+                            <a class="Cancel"
+                               href="javascript:;"
+                               style="display:none">Cancel</a>
+
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="CustomerID"><span>
+
+                            <span class="label">3</span>
+
+                            <input class="text"
+                                   type="text"
+                                   value="3"
+                                   style="display:none"
+                                   disabled="disabled" />
+
+                        </span>
+                    </td>
+                    <td class="Name"><span>
+
+                            <span class="label">ttt5</span>
+
+                            <input class="text"
+                                   type="text"
+                                   value="ttt5"
+                                   style="display:none" />
+
+                        </span>
+                    </td>
+                    <td class="CustomerType"><span>
+
+                            <select Style="display:none"
+                                    class="form-control ddlID  text CustomerTypesName"
+                                    id="CustomerTypeID"
+                                    name="Name">
+                                <option value="2">Boss</option>
+                                <option selected="selected"
+                                        value="1">Feing</option>
+                                <option selected="selected"
+                                        value="1">ttt5</option>
+                            </select> <span class="ddlSaveId"
+                                  style="display:none"
+                                  name="Name"></span>
+                            <span class="form-control-label ddlName label CustomerTypeID"
+                                  style=""
+                                  name="Name">Feing</span>
+                            <select Style="display:none"
+                                    class="form-control ddlID  text CustomerTypesName"
+                                    id="CustomerTypeID"
+                                    name="Name">
+                                <option value="2">Boss</option>
+                                <option selected="selected"
+                                        value="1">Feing</option>
+                                <option selected="selected"
+                                        value="1">ttt5</option>
+                            </select> <span class="ddlSaveId"
+                                  style="display:none"
+                                  name="Name"></span>
+                            <span class="form-control-label ddlName label CustomerTypeID"
+                                  style=""
+                                  name="Name">ttt5</span>
+
+
+                        </span>
+                    </td>
+                    <td class="Active">
+
+
+
+                        <input type="checkbox"
+                               name="chkActive"
+                               class="label activelabel"
+                               value="value"
+                               checked
+                               disabled="disabled" />
+
+                        <input type="checkbox"
+                               class="chk text activetext"
+                               style="display:none"
+                               name="chkActive"
+                               value="value"
+                               checked />
+
+
+                    </td>
+                    <td>
+                        <span class="link">
+
+                            <a class="Edit"
+                               href="javascript:;">Edit</a>
+
+                            <a class="Delete"
+                               href="javascript:;">Delete</a>
+
+                            <a class="Update"
+                               href="javascript:;"
+                               style="display:none">Update</a>
+
+
+
+                            <a class="Cancel"
+                               href="javascript:;"
+                               style="display:none">Cancel</a>
+
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+
+</html>
