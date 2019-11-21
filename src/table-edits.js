@@ -1,4 +1,4 @@
-(function ($, window, document, undefined) {
+(function($, window, document, undefined) {
   var pluginName = 'editable',
     defaults = {
       keyboard: true,
@@ -9,10 +9,10 @@
       deleteSelector: '.delete',
       maintainWidth: true,
       dropdowns: {},
-      edit: function () { },
-      save: function () { },
-      cancel: function () { },
-      delete: function () { }
+      edit: function() {},
+      save: function() {},
+      cancel: function() {},
+      delete: function() {}
     };
 
   // Function constructor --- new Editable(...)
@@ -29,7 +29,7 @@
   }
 
   Editable.prototype = {
-    init: function () {
+    init: function() {
       this.editing = false;
 
       if (this.options.dblclick) {
@@ -57,12 +57,21 @@
         );
       }
 
-      // If row contains a checkbox, disable it...
+      // If row contains a checkbox, disable it
+      var checkbox = $(this.element).find(':checkbox');
+      if (checkbox) {
+        checkbox.attr('disabled', true);
+      }
 
-      // If row contains a select, detach it and display it's value in the <td> 
+      // If row contains a select, detach it and display it's value in the <td>
+      var select = $(this.element).find('select');
+      if (select) {
+        select.closest('td').append('<span>' + select.val() + '</span>');
+        select.hide();
+      }
     },
 
-    toggle: function (e) {
+    toggle: function(e) {
       e.preventDefault();
 
       this.editing = !this.editing;
@@ -74,19 +83,18 @@
       }
     },
 
-    edit: function () {
+    edit: function() {
       var instance = this,
         values = {};
 
       // For each <td> that has a data-field in the <tr> do the following
-      $('td[data-field]', this.element).each(function () {
+      $('td[data-field]', this.element).each(function() {
         // Note that $(this) here means the <td> that is being iterated
         // field --> data-field ie dataKey, value --> value displayed within <td>
         var input,
           field = $(this).data('field'),
           value = $(this).text(),
-          width = $(this).width(),
-          dropdownOptions = $(this).data('options');
+          width = $(this).width();
 
         // Save initial or old values in the values object
         values[field] = value;
@@ -95,26 +103,18 @@
           $(this).width(width);
         }
 
-        // E.g options = { dropdowns : { sex: ['male', 'female'] } }
-        if (field in instance.options.dropdowns && dropdownOptions) {
-          input = $('<select></select>');
-
-          for (var i = 0; i < dropdownOptions.length; i++) {
-            $('<option></option>')
-              .text(dropdownOptions[i])
-              .appendTo(input);
-          }
+        if (field in instance.options.dropdowns) {
+          $('span', this).hide();
+          input = $('select', this);
+          value = input.val();
+          values[field] = value;
+          input.show();
 
           // NOTE: jQuery returns the `input` object on every call to acheive method chaining
           // So here we assign `input` a value, we add the data attribute `data-old-value='value'` to input
           // And we prevent `dbClick` eventPropagation on input
-          input
-            .val(value)
-            .data('old-value', value)
-            .dblclick(instance._captureEvent);
-
+          input.data('old-value', input.val()).dblclick(instance._captureEvent);
           input.appendTo(this);
-
         } else if (field in instance.options.checkboxes) {
           // Enable checkbox
           input = $(':checkbox', this);
@@ -124,9 +124,7 @@
           input
             .data('old-value', values[field])
             .dblclick(instance._captureEvent);
-
         } else {
-
           $(this).empty();
           input = $('<input type="text" />')
             .val(value)
@@ -147,13 +145,13 @@
       this.options.edit.bind(this.element)(values);
     },
 
-    save: function () {
+    save: function() {
       var instance = this,
         oldValues = {},
         values = {};
 
       // Foreach <td> with a 'data-field' on this.element --> <tr>
-      $('td[data-field]', this.element).each(function () {
+      $('td[data-field]', this.element).each(function() {
         // Get input values
         var value = $(':input', this).val(),
           // Get old alues, so we can revert if `SAVE` fails
@@ -165,24 +163,32 @@
         // Store old values
         oldValues[field] = oldValue;
 
-        // Empty <td> and replace it's text with new values if it's not a checkbox
-        if (!instance.options.checkboxes.hasOwnProperty(field)) {
-          $(this)
-            .empty()
-            .text(value);
-        } else {
+        if (instance.options.checkboxes.hasOwnProperty(field)) {
           // Update checkbox value
-          var input = $(':checkbox', this);
-          values[field] = input.is(':checked') ? input.val() : null;
+          var checkbox = $(this).find(':checkbox');
+          values[field] = checkbox.is(':checked') ? checkbox.val() : null;
           // Disable checkbox
           $(':checkbox', this).attr('disabled', true);
+          return;
         }
+
+        if (instance.options.dropdowns.hasOwnProperty(field)) {
+          var dropdown = $('select', this).hide();
+          $('span', this)
+            .show()
+            .text(dropdown.val());
+          return;
+        }
+
+        $(this)
+          .empty()
+          .text(value);
       });
 
       this.options.save.bind(this.element)(oldValues, values);
     },
 
-    cancel: function () {
+    cancel: function() {
       var instance = this,
         values = {};
 
@@ -192,30 +198,47 @@
 
       instance.editing = false;
 
-      $('td[data-field]', this.element).each(function () {
+      $('td[data-field]', this.element).each(function() {
         var value = $(':input', this).data('old-value'),
           field = $(this).data('field');
 
         values[field] = value;
 
-        if (!instance.options.checkboxes.hasOwnProperty(field)) {
-          $(this)
-            .empty()
-            .text(value);
-        } else {
-          $(':checkbox', this).val(value);
-          $(':checkbox', this).attr('disabled', true);
+        if (instance.options.checkboxes.hasOwnProperty(field)) {
+          var checkbox = $(':checkbox', this);
+
+          if (value) {
+            checkbox.prop('checked', true);
+          } else {
+            checkbox.prop('checked', false);
+          }
+          checkbox.attr('disabled', true);
+          return;
         }
+
+        if (instance.options.dropdowns.hasOwnProperty(field)) {
+          $('select', this)
+            .val(value)
+            .hide();
+          $('span', this)
+            .show()
+            .text(value);
+          return;
+        }
+
+        $(this)
+          .empty()
+          .text(value);
       });
 
       this.options.cancel.bind(this.element)(values);
     },
 
-    delete: function () {
+    delete: function() {
       var instance = this,
         values = {};
 
-      $('td[data-field]', this.element).each(function () {
+      $('td[data-field]', this.element).each(function() {
         // Get input values
         var value = $(this).text() || $(':input', this).val(),
           field = $(this).data('field');
@@ -231,11 +254,11 @@
       this.options.delete.bind(this.element)(values);
     },
 
-    _captureEvent: function (e) {
+    _captureEvent: function(e) {
       e.stopPropagation();
     },
 
-    _captureKey: function (e) {
+    _captureKey: function(e) {
       if (e.which === 13) {
         this.editing = false;
         this.save();
@@ -247,10 +270,10 @@
 
   // Attach plugin to JQuery's prototype
   // Accept options {...}
-  $.fn[pluginName] = function (options) {
+  $.fn[pluginName] = function(options) {
     // `this` here, points to jQuery
     // Iterate through returned <tr>
-    return this.each(function () {
+    return this.each(function() {
       // `this` here refers to each <tr>
       if (!$.data(this, 'plugin_' + pluginName)) {
         // new Editable() is being called for each <tr>

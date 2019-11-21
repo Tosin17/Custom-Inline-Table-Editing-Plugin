@@ -1,221 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <meta charset="utf-8">
-    <title>Table Edits jQuery Plugin</title>
-    <meta name="description"
-          content="">
-    <meta name="author"
-          content="">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1">
-    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600"
-          rel="stylesheet"
-          type="text/css">
+<head>
+  <meta charset="utf-8">
+  <title>Table Edits jQuery Plugin</title>
+  <meta name="description"
+        content="">
+  <meta name="author"
+        content="">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600"
+        rel="stylesheet"
+        type="text/css">
 
-    <link rel="stylesheet"
-          href="bower_components/skeleton/css/normalize.css">
-    <link rel="stylesheet"
-          href="bower_components/skeleton/css/skeleton.css">
-    <link rel="stylesheet"
-          href="bower_components/font-awesome/css/font-awesome.css">
+  <link rel="stylesheet"
+        href="bower_components/skeleton/css/normalize.css">
+  <link rel="stylesheet"
+        href="bower_components/skeleton/css/skeleton.css">
+  <link rel="stylesheet"
+        href="bower_components/font-awesome/css/font-awesome.css">
 
-    <style>
-      body {
-        margin-bottom: 100px;
-      }
+  <style>
+    body {
+      margin-bottom: 100px;
+    }
 
-      .row {
-        margin-bottom: 20px;
-      }
+    .row {
+      margin-bottom: 20px;
+    }
 
-      pre {
-        margin-top: 0;
-      }
+    pre {
+      margin-top: 0;
+    }
 
-      .button.button-small {
-        height: 30px;
-        line-height: 30px;
-        padding: 0px 10px;
-      }
+    .button.button-small {
+      height: 30px;
+      line-height: 30px;
+      padding: 0px 10px;
+    }
 
-      td input[type=text],
-      td select {
-        width: 100%;
-        height: 30px;
-        margin: 0;
-        padding: 2px 8px;
-      }
+    td input[type=text],
+    td select {
+      width: 100%;
+      height: 30px;
+      margin: 0;
+      padding: 2px 8px;
+    }
 
-      th:last-child {
-        text-align: right;
-      }
+    th:last-child {
+      text-align: right;
+    }
 
-      td:last-child {
-        text-align: right;
-      }
+    td:last-child {
+      text-align: right;
+    }
 
-      td:last-child .button {
-        width: 30px;
-        height: 30px;
-        text-align: center;
-        padding: 0px;
-        margin-bottom: 0px;
-        margin-right: 5px;
-        background-color: #FFF;
-      }
+    td:last-child .button {
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      padding: 0px;
+      margin-bottom: 0px;
+      margin-right: 5px;
+      background-color: #FFF;
+    }
 
-      td:last-child .button .fa {
-        line-height: 30px;
-        width: 30px;
-      }
-    </style>
-  </head>
+    td:last-child .button .fa {
+      line-height: 30px;
+      width: 30px;
+    }
+  </style>
+</head>
 
-  <body>
-    <div class="container">
-      <div class="row">
-        <div class="twelve columns"
-             style="margin-top: 5%">
-          <h4>Table Edit Custom Plugin for Timothy</h4>
-          <table class="u-full-width demo">
-            <thead>
-              <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Customer Type</th>
-                <th>Active</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr data-id="1">
-                <td data-field="id">1</td>
-                <td data-field="name">Customer 1</td>
-                <td data-field="customerType">
-                  <select name="customerType">
-                    <option value="1">Type 1</option>
-                    <option selected="selected"
-                            value="2">Type 2</option>
-                    <option selected="selected"
-                            value="3">Type 3</option>
-                  </select>
-                </td>
-                <td data-field="active">
-                  <input type="checkbox"
-                         name="active"
-                         value="active"
-                         checked
-                         disabled>
-                </td>
-                <td>
-                  <a class="button button-small edit"
-                     title="Edit">
-                    <i class="fa fa-pencil"></i>
-                  </a>
-                  <a class="button button-small cancel"
-                     title="Cancel">
-                    <i class="fa fa-times"></i>
-                  </a>
-                  <a class="button button-small delete"
-                     title="Delete">
-                    <i class="fa fa-trash"></i>
-                  </a>
-                </td>
-              </tr>
-              <tr data-id="2">
-                <td data-field="id">2</td>
-                <td data-field="name">Customer 2</td>
-                <td data-field="customerType">
-                  <select name="customerType">
-                    <option value="1">Type 1</option>
-                    <option selected="selected"
-                            value="2">Type 2</option>
-                    <option selected="selected"
-                            value="3">Type 3</option>
-                  </select>
-                </td>
-                <td data-field="active">
-                  <input type="checkbox"
-                         name="active"
-                         value="active"
-                         disabled>
-                </td>
-                <td>
-                  <a class="button button-small edit"
-                     title="Edit">
-                    <i class="fa fa-pencil"></i>
-                  </a>
-                  <a class="button button-small cancel"
-                     title="Cancel">
-                    <i class="fa fa-times"></i>
-                  </a>
-                  <a class="button button-small delete"
-                     title="Delete">
-                    <i class="fa fa-trash"></i>
-                  </a>
-                </td>
-              </tr>
-              <tr data-id="3">
-                <td data-field="id">3</td>
-                <td data-field="name">Customer 3</td>
-                <td data-field="customerType">
-                  <select name="customerType">
-                    <option value="1">Type 1</option>
-                    <option selected="selected"
-                            value="2">Type 2</option>
-                    <option selected="selected"
-                            value="3">Type 3</option>
-                  </select>
-                </td>
-                <td data-field="active">
-                  <input type="checkbox"
-                         name="active"
-                         value="active"
-                         checked
-                         disabled>
-                </td>
-                <td>
-                  <a class="button button-small edit"
-                     title="Edit">
-                    <i class="fa fa-pencil"></i>
-                  </a>
-                  <a class="button button-small cancel"
-                     title="Cancel">
-                    <i class="fa fa-times"></i>
-                  </a>
-                  <a class="button button-small delete"
-                     title="Delete">
-                    <i class="fa fa-trash"></i>
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="twelve columns"
+           style="margin-top: 5%">
+        <h4>Table Edit Custom Plugin for Timothy</h4>
+        <table class="u-full-width demo">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Customer Type</th>
+              <th>Active</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-id="1">
+              <td data-field="id">1</td>
+              <td data-field="name">Customer 1</td>
+              <td data-field="customerType">
+                <select name="customerType">
+                  <option value="1">Type 1</option>
+                  <option value="2">Type 2</option>
+                  <option selected="selected"
+                          value="3">Type 3</option>
+                </select>
+              </td>
+              <td data-field="active">
+                <input type="checkbox"
+                       name="active"
+                       value="active"
+                       checked>
+              </td>
+              <td>
+                <a class="button button-small edit"
+                   title="Edit">
+                  <i class="fa fa-pencil"></i>
+                </a>
+                <a class="button button-small cancel"
+                   title="Cancel">
+                  <i class="fa fa-times"></i>
+                </a>
+                <a class="button button-small delete"
+                   title="Delete">
+                  <i class="fa fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+            <tr data-id="2">
+              <td data-field="id">2</td>
+              <td data-field="name">Customer 2</td>
+              <td data-field="customerType">
+                <select name="customerType">
+                  <option value="1">Type 1</option>
+                  <option selected="selected"
+                          value="2">Type 2</option>
+                  <option value="3">Type 3</option>
+                </select>
+              </td>
+              <td data-field="active">
+                <input type="checkbox"
+                       name="active"
+                       value="active"
+                       disabled>
+              </td>
+              <td>
+                <a class="button button-small edit"
+                   title="Edit">
+                  <i class="fa fa-pencil"></i>
+                </a>
+                <a class="button button-small cancel"
+                   title="Cancel">
+                  <i class="fa fa-times"></i>
+                </a>
+                <a class="button button-small delete"
+                   title="Delete">
+                  <i class="fa fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+            <tr data-id="3">
+              <td data-field="id">3</td>
+              <td data-field="name">Customer 3</td>
+              <td data-field="customerType">
+                <select name="customerType">
+                  <option value="1"
+                          selected>Type 1</option>
+                  <option value="2">Type 2</option>
+                  <option value="3">Type 3</option>
+                </select>
+              </td>
+              <td data-field="active">
+                <input type="checkbox"
+                       name="active"
+                       value="active"
+                       checked
+                       disabled>
+              </td>
+              <td>
+                <a class="button button-small edit"
+                   title="Edit">
+                  <i class="fa fa-pencil"></i>
+                </a>
+                <a class="button button-small cancel"
+                   title="Cancel">
+                  <i class="fa fa-times"></i>
+                </a>
+                <a class="button button-small delete"
+                   title="Delete">
+                  <i class="fa fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="row">
-        <div class="six columns">
-          <p>
-            <strong>Table Edit</strong> does the following things:
-            <ul>
-              <li>Replaces cell values with input fields on edit</li>
-              <li>Handles row editing state</li>
-              <li>Fires callbacks for edit, save, delete and cancel</li>
-            </ul>
-            And <strong>optionally</strong>, a couple more:
-            <br /><br />
-            <ul>
-              <li>Binds a button or double click to start editing</li>
-              <li>Binds enter and escape keys to save and cancel</li>
-              <li>Maintains column widths when switching to edit</li>
-              <li>Create select fields instead of input fields</li>
-            </ul>
-          </p>
-        </div>
-        <div class="six columns">
-          <pre><code>$("table tr").editable({
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <p>
+          <strong>Table Edit</strong> does the following things:
+          <ul>
+            <li>Replaces cell values with input fields on edit</li>
+            <li>Handles row editing state</li>
+            <li>Fires callbacks for edit, save, delete and cancel</li>
+          </ul>
+          And <strong>optionally</strong>, a couple more:
+          <br /><br />
+          <ul>
+            <li>Binds a button or double click to start editing</li>
+            <li>Binds enter and escape keys to save and cancel</li>
+            <li>Maintains column widths when switching to edit</li>
+            <li>Create select fields instead of input fields</li>
+          </ul>
+        </p>
+      </div>
+      <div class="six columns">
+        <pre><code>$("table tr").editable({
     keyboard: true,
     dblclick: true,
     button: true,
@@ -229,82 +225,82 @@
     cancel: function(values) {},
     delete: function(values) {}
 });</code></pre>
-        </div>
       </div>
-      <div class="row">
-        <div class="twelve columns">
-          <p>
-            The only additional markup <strong>Table Edits</strong> requires
-            is a <code>data-field</code> attribute on each editable cell with it's column name.
-          </p>
-        </div>
+    </div>
+    <div class="row">
+      <div class="twelve columns">
+        <p>
+          The only additional markup <strong>Table Edits</strong> requires
+          is a <code>data-field</code> attribute on each editable cell with it's column name.
+        </p>
       </div>
-      <div class="row">
-        <div class="six columns">
-          <h5>Saving Table Data</h5>
-          <p>
-            Table Edits makes it easy to save edits. Callbacks are passed a <code>values</code>
-            object with column names and values of the edited row.
-            <br /><br />
-            Posting the new data to an API endpoint is simple.
-          </p>
-        </div>
-        <div class="six columns">
-          <pre><code>$("table tr").editable({
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <h5>Saving Table Data</h5>
+        <p>
+          Table Edits makes it easy to save edits. Callbacks are passed a <code>values</code>
+          object with column names and values of the edited row.
+          <br /><br />
+          Posting the new data to an API endpoint is simple.
+        </p>
+      </div>
+      <div class="six columns">
+        <pre><code>$("table tr").editable({
     save: function(values) {
       var id = $(this).data('id');
       $.post('/api/object/' + id, values);
     }
 });</code></pre>
-        </div>
       </div>
     </div>
+  </div>
 
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="src/table-edits.js"></script>
-    <script>
-      $(function () {
-        $('table tr').editable({
-          dropdowns: {
-            customerType: true
-          },
-          checkboxes: {
-            active: true
-          },
-          edit: function (values) {
-            $(".edit i", this)
-              .removeClass('fa-pencil')
-              .addClass('fa-save')
-              .attr('title', 'Save');
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="src/table-edits.js"></script>
+  <script>
+    $(function () {
+      $('table tr').editable({
+        dropdowns: {
+          customerType: true
+        },
+        checkboxes: {
+          active: true
+        },
+        edit: function (values) {
+          $(".edit i", this)
+            .removeClass('fa-pencil')
+            .addClass('fa-save')
+            .attr('title', 'Save');
 
-            console.log(values);
-          },
-          save: function (oldValues, values) {
-            $(".edit i", this)
-              .removeClass('fa-save')
-              .addClass('fa-pencil')
-              .attr('title', 'Edit');
+          console.log(values);
+        },
+        save: function (oldValues, values) {
+          $(".edit i", this)
+            .removeClass('fa-save')
+            .addClass('fa-pencil')
+            .attr('title', 'Edit');
 
-            console.log(values);
-          },
-          cancel: function (values) {
-            $(".edit i", this)
-              .removeClass('fa-save')
-              .addClass('fa-pencil')
-              .attr('title', 'Edit');
+          console.log(values);
+        },
+        cancel: function (values) {
+          $(".edit i", this)
+            .removeClass('fa-save')
+            .addClass('fa-pencil')
+            .attr('title', 'Edit');
 
-            console.log(values);
-          },
-          delete: function (values) {
-            console.log(values);
-            confirm('Do you want to..' + values.id + values.name);
-            // Do delete ajax.
-            // If delete succeeds, then you remove
-            $(this).remove();
-          }
-        });
+          console.log(values);
+        },
+        delete: function (values) {
+          console.log(values);
+          confirm('Do you want to..' + values.id + values.name);
+          // Do delete ajax.
+          // If delete succeeds, then you remove
+          $(this).remove();
+        }
       });
-    </script>
-  </body>
+    });
+  </script>
+</body>
 
 </html>
