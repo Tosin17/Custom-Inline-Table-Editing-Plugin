@@ -248,6 +248,10 @@
           value = input.is(':checked') ? input.val() : null;
         }
 
+        if (instance.options.dropdowns.hasOwnProperty(field)) {
+          value = $('select', this).val();
+        }
+
         values[field] = value;
       });
 

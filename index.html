@@ -273,7 +273,6 @@
             .addClass('fa-save')
             .attr('title', 'Save');
 
-          console.log(values);
         },
         save: function (oldValues, values) {
           $(".edit i", this)
@@ -281,7 +280,6 @@
             .addClass('fa-pencil')
             .attr('title', 'Edit');
 
-          console.log(values);
         },
         cancel: function (values) {
           $(".edit i", this)
@@ -289,11 +287,12 @@
             .addClass('fa-pencil')
             .attr('title', 'Edit');
 
-          console.log(values);
         },
         delete: function (values) {
-          console.log(values);
-          confirm('Do you want to..' + values.id + values.name);
+          var isDelete = confirm('Do you want to delete' + values.id + values.name);
+          if (!isDelete) {
+            return;
+          }
           // Do delete ajax.
           // If delete succeeds, then you remove
           $(this).remove();
