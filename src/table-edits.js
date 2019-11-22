@@ -15,12 +15,15 @@
       delete: function() {}
     };
 
+  var tableModel = [];
+
   // Function constructor --- new Editable(...)
   function Editable(element, options) {
     // Since this is called for each <tr>, this.element points to each <tr>
     this.element = element;
     // Works like the ES6 spread operator
     this.options = $.extend({}, defaults, options);
+    tableModel.push(this);
 
     this._defaults = defaults;
     this._name = pluginName;
@@ -83,6 +86,21 @@
       }
     },
 
+    clearRowsFromEditMode: function(id) {
+      var instance = this;
+
+      tableModel.forEach(function(el) {
+        var rowId = $(el.element).data('id');
+        if (!rowId) {
+          return;
+        }
+
+        if (rowId !== id) {
+          el.cancel();
+        }
+      });
+    },
+
     edit: function() {
       var instance = this,
         values = {};
@@ -143,6 +161,7 @@
       // Create a new edit function, bind <tr> to its context so that its `this` points to <tr>,
       // call the returned function, passing `values` to it
       this.options.edit.bind(this.element)(values);
+      this.clearRowsFromEditMode.bind(this)($(this.element).data('id'));
     },
 
     save: function() {
