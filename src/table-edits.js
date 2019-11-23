@@ -69,7 +69,7 @@
       // If row contains a select, detach it and display it's value in the <td>
       var select = $(this.element).find('select');
       if (select) {
-        select.closest('td').append('<span>' + select.val() + '</span>');
+        select.closest('.state').append('<span>' + select.val() + '</span>');
         select.hide();
       }
     },
@@ -90,7 +90,7 @@
       var instance = this;
 
       tableModel.forEach(function(el) {
-        var rowId = $(el.element).data('id');
+        var rowId = $('.state', el.element).data('id');
         if (!rowId) {
           return;
         }
@@ -106,7 +106,7 @@
         values = {};
 
       // For each <td> that has a data-field in the <tr> do the following
-      $('td[data-field]', this.element).each(function() {
+      $('.state', this.element).each(function() {
         // Note that $(this) here means the <td> that is being iterated
         // field --> data-field ie dataKey, value --> value displayed within <td>
         var input,
@@ -161,7 +161,9 @@
       // Create a new edit function, bind <tr> to its context so that its `this` points to <tr>,
       // call the returned function, passing `values` to it
       this.options.edit.bind(this.element)(values);
-      this.clearRowsFromEditMode.bind(this)($(this.element).data('id'));
+      this.clearRowsFromEditMode.bind(this)(
+        $('.state', this.element).data('id')
+      );
     },
 
     save: function() {
@@ -170,7 +172,7 @@
         values = {};
 
       // Foreach <td> with a 'data-field' on this.element --> <tr>
-      $('td[data-field]', this.element).each(function() {
+      $('.state', this.element).each(function() {
         // Get input values
         var value = $(':input', this).val(),
           // Get old alues, so we can revert if `SAVE` fails
@@ -217,7 +219,7 @@
 
       instance.editing = false;
 
-      $('td[data-field]', this.element).each(function() {
+      $('.state', this.element).each(function() {
         var value = $(':input', this).data('old-value'),
           field = $(this).data('field');
 
@@ -257,7 +259,7 @@
       var instance = this,
         values = {};
 
-      $('td[data-field]', this.element).each(function() {
+      $('.state', this.element).each(function() {
         // Get input values
         var value = $(this).text() || $(':input', this).val(),
           field = $(this).data('field');
