@@ -69,7 +69,9 @@
       // If row contains a select, detach it and display it's value in the <td>
       var select = $(this.element).find('select');
       if (select) {
-        select.closest('.state').append('<span>' + select.val() + '</span>');
+        select
+          .closest('.state')
+          .append('<span>' + $(':selected', select).text() + '</span>');
         select.hide();
       }
     },
@@ -131,6 +133,7 @@
           // NOTE: jQuery returns the `input` object on every call to acheive method chaining
           // So here we assign `input` a value, we add the data attribute `data-old-value='value'` to input
           // And we prevent `dbClick` eventPropagation on input
+          input.data('old-text', $(':selected', input).text());
           input.data('old-value', input.val()).dblclick(instance._captureEvent);
           input.appendTo(this);
         } else if (field in instance.options.checkboxes) {
@@ -197,7 +200,7 @@
           var dropdown = $('select', this).hide();
           $('span', this)
             .show()
-            .text(dropdown.val());
+            .text($(':selected', dropdown).text());
           return;
         }
 
@@ -238,12 +241,12 @@
         }
 
         if (instance.options.dropdowns.hasOwnProperty(field)) {
-          $('select', this)
-            .val(value)
-            .hide();
+          var dropdown = $('select', this);
+          var oldSelText = $(dropdown).data('old-text');
+          dropdown.val(value).hide();
           $('span', this)
             .show()
-            .text(value);
+            .text(oldSelText);
           return;
         }
 

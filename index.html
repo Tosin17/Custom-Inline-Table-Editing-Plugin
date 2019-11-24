@@ -10,298 +10,203 @@
         content="">
   <meta name="viewport"
         content="width=device-width, initial-scale=1">
-  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600"
-        rel="stylesheet"
-        type="text/css">
-
-  <link rel="stylesheet"
-        href="bower_components/skeleton/css/normalize.css">
-  <link rel="stylesheet"
-        href="bower_components/skeleton/css/skeleton.css">
-  <link rel="stylesheet"
-        href="bower_components/font-awesome/css/font-awesome.css">
-
-  <style>
+  <style type="text/css">
     body {
-      margin-bottom: 100px;
+      font-family: Arial;
+      font-size: 10pt;
     }
 
-    .row {
-      margin-bottom: 20px;
+    .Grid {
+      border: 1px solid #ccc;
+      border-collapse: collapse;
     }
 
-    pre {
-      margin-top: 0;
+    .Grid th {
+      background-color: #F7F7F7;
+      font-weight: bold;
     }
 
-    .button.button-small {
-      height: 30px;
-      line-height: 30px;
-      padding: 0px 10px;
+    .Grid th,
+    .Grid td {
+      padding: 5px;
+      width: 170px;
+      border: 1px solid #ccc;
     }
 
-    td input[type=text],
-    td select {
-      width: 100%;
-      height: 30px;
-      margin: 0;
-      padding: 2px 8px;
+    .Grid,
+    .Grid table td {
+      border: 0px solid #ccc;
     }
 
-    th:last-child {
-      text-align: right;
+    .Grid th a,
+    .Grid th a:visited {
+      color: #333;
     }
 
-    td:last-child {
-      text-align: right;
+    .actions {
+      width: 250px;
     }
 
-    td:last-child .button {
-      width: 30px;
-      height: 30px;
-      text-align: center;
-      padding: 0px;
-      margin-bottom: 0px;
-      margin-right: 5px;
-      background-color: #FFF;
+    ._edit::after {
+      content: 'Edit';
     }
 
-    td:last-child .button .fa {
-      line-height: 30px;
-      width: 30px;
+    ._save::after {
+      content: 'Save';
     }
   </style>
+
 </head>
 
 <body>
-  <div class="container">
-    <div class="row">
-      <div class="twelve columns"
-           style="margin-top: 5%">
-        <h4>Table Edit Custom Plugin for Timothy</h4>
-        <table class="u-full-width demo">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Name</th>
-              <th>Customer Type</th>
-              <th>Active</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div class="state"
-                     data-field="id"
-                     data-id="1">1</div>
-              </td>
-              <td>
-                <div class="state"
-                     data-field="name"
-                     data-id="1">Customer 1</div>
-              </td>
-              <td>
-                <div class="state"
-                     data-field="customerType"
-                     data-id="1">
-                  <select name="customerType">
-                    <option value="1">Type 1</option>
-                    <option value="2">Type 2</option>
-                    <option selected="selected"
-                            value="3">Type 3</option>
-                  </select>
-                </div>
-              </td>
-              <td>
-                <div class="state"
-                     data-field="active"
-                     data-id="1">
-                  <input type="checkbox"
-                         name="active"
-                         value="active"
-                         checked>
-                </div>
-              </td>
-              <td>
-                <a class="button button-small edit"
-                   title="Edit">
-                  <i class="fa fa-pencil"></i>
-                </a>
-                <a class="button button-small cancel"
-                   title="Cancel">
-                  <i class="fa fa-times"></i>
-                </a>
-                <a class="button button-small delete"
-                   title="Delete">
-                  <i class="fa fa-trash"></i>
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="state"
-                     data-field="id"
-                     data-id="2">2</div>
-              </td>
-              <td>
-                <div class="state"
-                     data-field="name"
-                     data-id="2">Customer 2</div>
-              </td>
-              <td>
-                <div class="state"
-                     data-field="customerType"
-                     data-id="2">
-                  <select name="customerType">
-                    <option value="1">Type 1</option>
-                    <option selected="selected"
-                            value="2">Type 2</option>
-                    <option value="3">Type 3</option>
-                  </select>
-                </div>
-              </td>
-              <td>
-                <div class="state"
-                     data-field="active"
-                     data-id="2">
-                  <input type="checkbox"
-                         name="active"
-                         value="active"
-                         checked>
-                </div>
-              </td>
-              <td>
-                <a class="button button-small edit"
-                   title="Edit">
-                  <i class="fa fa-pencil"></i>
-                </a>
-                <a class="button button-small cancel"
-                   title="Cancel">
-                  <i class="fa fa-times"></i>
-                </a>
-                <a class="button button-small delete"
-                   title="Delete">
-                  <i class="fa fa-trash"></i>
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="state"
-                     data-field="id"
-                     data-id="3">3</div>
-              </td>
-              <td>
-                <div class="state"
-                     data-field="name"
-                     data-id="3">Customer 3</div>
-              </td>
-              <td>
-                <div class="state"
-                     data-field="customerType"
-                     data-id="3">
-                  <select name="customerType">
-                    <option value="1"
-                            selected="selected">Type 1</option>
-                    <option value="2">Type 2</option>
-                    <option value="3">Type 3</option>
-                  </select>
-                </div>
-              </td>
-              <td>
-                <div class="state"
-                     data-field="active"
-                     data-id="3">
-                  <input type="checkbox"
-                         name="active"
-                         value="active"
-                         checked>
-                </div>
-              </td>
-              <td>
-                <a class="button button-small edit"
-                   title="Edit">
-                  <i class="fa fa-pencil"></i>
-                </a>
-                <a class="button button-small cancel"
-                   title="Cancel">
-                  <i class="fa fa-times"></i>
-                </a>
-                <a class="button button-small delete"
-                   title="Delete">
-                  <i class="fa fa-trash"></i>
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="row">
-      <div class="six columns">
-        <p>
-          <strong>Table Edit</strong> does the following things:
-          <ul>
-            <li>Replaces cell values with input fields on edit</li>
-            <li>Handles row editing state</li>
-            <li>Fires callbacks for edit, save, delete and cancel</li>
-          </ul>
-          And <strong>optionally</strong>, a couple more:
-          <br /><br />
-          <ul>
-            <li>Binds a button or double click to start editing</li>
-            <li>Binds enter and escape keys to save and cancel</li>
-            <li>Maintains column widths when switching to edit</li>
-            <li>Create select fields instead of input fields</li>
-          </ul>
-        </p>
-      </div>
-      <div class="six columns">
-        <pre><code>$("table tr").editable({
-    keyboard: true,
-    dblclick: true,
-    button: true,
-    editSelector: '.edit',
-    cancelSelector: '.cancel',
-    deleteSelector: '.delete',
-    dropdowns: {},
-    maintainWidth: true,
-    edit: function(values) {},
-    save: function(values) {},
-    cancel: function(values) {},
-    delete: function(values) {}
-});</code></pre>
-      </div>
-    </div>
-    <div class="row">
-      <div class="twelve columns">
-        <p>
-          The only additional markup <strong>Table Edits</strong> requires
-          is a <code>data-field</code> attribute on each editable cell with it's column name.
-        </p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="six columns">
-        <h5>Saving Table Data</h5>
-        <p>
-          Table Edits makes it easy to save edits. Callbacks are passed a <code>values</code>
-          object with column names and values of the edited row.
-          <br /><br />
-          Posting the new data to an API endpoint is simple.
-        </p>
-      </div>
-      <div class="six columns">
-        <pre><code>$("table tr").editable({
-    save: function(values) {
-      var id = $(this).data('id');
-      $.post('/api/object/' + id, values);
-    }
-});</code></pre>
-      </div>
-    </div>
-  </div>
+
+  <h4>Table Edit Custom Plugin for Timothy</h4>
+  <table id="WebGrid"
+         class="Grid">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">name</th>
+        <th scope="col">customer type</th>
+        <th scope="col">active </th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="CustomerID">
+          <div class="state"
+               data-field="id"
+               data-id="1">1</div>
+        </td>
+        <td class="Name">
+          <div class="state"
+               data-field="name"
+               data-id="1">Boss</div>
+        </td>
+        <td class="CustomerType">
+          <div class="state"
+               data-field="customerType"
+               data-id="1">
+            <select id="CustomerTypeID"
+                    name="Name">
+              <option selected="selected"
+                      value="2">Boss</option>
+              <option value="1">Feing</option>
+              <option value="1">ttt5</option>
+            </select>
+        </td>
+        <td class="Active">
+          <div class="state"
+               data-field="active"
+               data-id="1">
+            <input type="checkbox"
+                   name="chkActive" />
+          </div>
+        </td>
+        <td>
+          <span class="actions">
+            <a class="edit _edit"
+               href="javascript:;"></a>
+            <a class="delete"
+               href="javascript:;">Delete</a>
+            <a class="cancel"
+               href="javascript:;">Cancel</a>
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td class="CustomerID">
+          <div class="state"
+               data-field="id"
+               data-id="2">2</div>
+        </td>
+        <td class="Name">
+          <div class="state"
+               data-field="name"
+               data-id="2">Feing</div>
+        </td>
+        <td class="CustomerType">
+          <div class="state"
+               data-field="customerType"
+               data-id="2">
+            <select id="CustomerTypeID"
+                    name="Name">
+              <option value="2">Boss</option>
+              <option selected="selected"
+                      value="1">Feing</option>
+              <option selected="selected"
+                      value="1">ttt5</option>
+            </select>
+        </td>
+        <td class="Active">
+          <div class="state"
+               data-field="active"
+               data-id="2">
+            <input type="checkbox"
+                   name="chkActive"
+                   value="value"
+                   checked />
+          </div>
+        </td>
+        <td>
+          <span class="actions">
+            <a class="edit _edit"
+               href="javascript:;"></a>
+            <a class="delete"
+               href="javascript:;">Delete</a>
+            <a class="cancel"
+               href="javascript:;">Cancel</a>
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td class="CustomerID">
+          <div class="state"
+               data-field="id"
+               data-id="3">3</div>
+        </td>
+        <td class="Name">
+          <div class="state"
+               data-field="name"
+               data-id="3">ttt5</div>
+        </td>
+        <td class="CustomerType">
+          <div class="state"
+               data-field="customerType"
+               data-id="3">
+            <select id="CustomerTypeID"
+                    name="Name">
+              <option value="2">Boss</option>
+              <option selected="selected"
+                      value="1">Feing</option>
+              <option selected="selected"
+                      value="1">ttt5</option>
+            </select>
+        </td>
+        <td class="Active">
+          <div class="state"
+               data-field="active"
+               data-id="3">
+            <input type="checkbox"
+                   name="chkActive"
+                   value="value"
+                   checked />
+          </div>
+        </td>
+        <td>
+          <span class="actions">
+            <a class="edit _edit"
+               href="javascript:;"></a>
+            <a class="delete"
+               href="javascript:;">Delete</a>
+            <a class="cancel"
+               href="javascript:;">Cancel</a>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
   <script src="bower_components/jquery/dist/jquery.js"></script>
   <script src="src/table-edits.js"></script>
@@ -315,23 +220,22 @@
           active: true
         },
         edit: function (values) {
-          $(".edit i", this)
-            .removeClass('fa-pencil')
-            .addClass('fa-save')
+          $(".edit", this)
+            .removeClass('_edit')
+            .addClass('_save')
             .attr('title', 'Save');
 
         },
         save: function (oldValues, values) {
-          $(".edit i", this)
-            .removeClass('fa-save')
-            .addClass('fa-pencil')
+          $(".edit", this)
+            .removeClass('_save')
+            .addClass('_edit')
             .attr('title', 'Edit');
-
         },
         cancel: function (values) {
-          $(".edit i", this)
-            .removeClass('fa-save')
-            .addClass('fa-pencil')
+          $(".edit", this)
+            .removeClass('_save')
+            .addClass('_edit')
             .attr('title', 'Edit');
 
         },
