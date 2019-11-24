@@ -17,11 +17,8 @@
 
   var tableModel = [];
 
-  // Function constructor --- new Editable(...)
   function Editable(element, options) {
-    // Since this is called for each <tr>, this.element points to each <tr>
     this.element = element;
-    // Works like the ES6 spread operator
     this.options = $.extend({}, defaults, options);
     tableModel.push(this);
 
@@ -36,13 +33,11 @@
       this.editing = false;
 
       if (this.options.dblclick) {
-        // Bind the dbclick event to the <tr>
         $(this.element)
           .css('cursor', 'pointer')
           .bind('dblclick', this.toggle.bind(this));
       }
 
-      // Bind '.edit' to the click event
       if (this.options.button) {
         $(this.options.editSelector, this.element).bind(
           'click',
@@ -60,13 +55,11 @@
         );
       }
 
-      // If row contains a checkbox, disable it
       var checkbox = $(this.element).find(':checkbox');
       if (checkbox) {
         checkbox.attr('disabled', true);
       }
 
-      // If row contains a select, detach it and display it's value in the <td>
       var select = $(this.element).find('select');
       if (select) {
         select
@@ -107,16 +100,12 @@
       var instance = this,
         values = {};
 
-      // For each <td> that has a data-field in the <tr> do the following
       $('.state', this.element).each(function() {
-        // Note that $(this) here means the <td> that is being iterated
-        // field --> data-field ie dataKey, value --> value displayed within <td>
         var input,
           field = $(this).data('field'),
           value = $(this).text(),
           width = $(this).width();
 
-        // Save initial or old values in the values object
         values[field] = value;
 
         if (instance.options.maintainWidth) {
@@ -130,14 +119,10 @@
           values[field] = value;
           input.show();
 
-          // NOTE: jQuery returns the `input` object on every call to acheive method chaining
-          // So here we assign `input` a value, we add the data attribute `data-old-value='value'` to input
-          // And we prevent `dbClick` eventPropagation on input
           input.data('old-text', $(':selected', input).text());
           input.data('old-value', input.val()).dblclick(instance._captureEvent);
           input.appendTo(this);
         } else if (field in instance.options.checkboxes) {
-          // Enable checkbox
           input = $(':checkbox', this);
           input.attr('disabled', false);
           values[field] = input.is(':checked') ? input.val() : null;
@@ -155,14 +140,11 @@
           input.appendTo(this);
         }
 
-        // If keyboard events are enabled, bind eventhandlers to <tr>
         if (instance.options.keyboard) {
           input.keydown(instance._captureKey.bind(instance));
         }
       });
 
-      // Create a new edit function, bind <tr> to its context so that its `this` points to <tr>,
-      // call the returned function, passing `values` to it
       this.options.edit.bind(this.element)(values);
       this.clearRowsFromEditMode.bind(this)(
         $('.state', this.element).data('id')
@@ -263,7 +245,6 @@
         values = {};
 
       $('.state', this.element).each(function() {
-        // Get input values
         var value = $(this).text() || $(':input', this).val(),
           field = $(this).data('field');
 
@@ -296,16 +277,9 @@
     }
   };
 
-  // Attach plugin to JQuery's prototype
-  // Accept options {...}
   $.fn[pluginName] = function(options) {
-    // `this` here, points to jQuery
-    // Iterate through returned <tr>
     return this.each(function() {
-      // `this` here refers to each <tr>
       if (!$.data(this, 'plugin_' + pluginName)) {
-        // new Editable() is being called for each <tr>
-        // $.data(<tr>, name, data)
         $.data(this, 'plugin_' + pluginName, new Editable(this, options));
       }
     });
