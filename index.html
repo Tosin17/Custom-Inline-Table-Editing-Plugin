@@ -75,17 +75,17 @@
     <tbody>
       <tr>
         <td class="CustomerID">
-          <div class="state"
+          <div class="edit-plugin__state"
                data-field="id"
                data-id="1">1</div>
         </td>
         <td class="Name">
-          <div class="state"
+          <div class="edit-plugin__state"
                data-field="name"
                data-id="1">Boss</div>
         </td>
         <td class="CustomerType">
-          <div class="state"
+          <div class="edit-plugin__state"
                data-field="customerType"
                data-id="1">
             <select id="CustomerTypeID"
@@ -97,7 +97,7 @@
             </select>
         </td>
         <td class="Active">
-          <div class="state"
+          <div class="edit-plugin__state"
                data-field="active"
                data-id="1">
             <input type="checkbox"
@@ -117,17 +117,17 @@
       </tr>
       <tr>
         <td class="CustomerID">
-          <div class="state"
+          <div class="edit-plugin__state"
                data-field="id"
                data-id="2">2</div>
         </td>
         <td class="Name">
-          <div class="state"
+          <div class="edit-plugin__state"
                data-field="name"
                data-id="2">Feing</div>
         </td>
         <td class="CustomerType">
-          <div class="state"
+          <div class="edit-plugin__state"
                data-field="customerType"
                data-id="2">
             <select id="CustomerTypeID"
@@ -140,7 +140,7 @@
             </select>
         </td>
         <td class="Active">
-          <div class="state"
+          <div class="edit-plugin__state"
                data-field="active"
                data-id="2">
             <input type="checkbox"
@@ -162,17 +162,17 @@
       </tr>
       <tr>
         <td class="CustomerID">
-          <div class="state"
+          <div class="edit-plugin__state"
                data-field="id"
                data-id="3">3</div>
         </td>
         <td class="Name">
-          <div class="state"
+          <div class="edit-plugin__state"
                data-field="name"
                data-id="3">ttt5</div>
         </td>
         <td class="CustomerType">
-          <div class="state"
+          <div class="edit-plugin__state"
                data-field="customerType"
                data-id="3">
             <select id="CustomerTypeID"
@@ -185,7 +185,7 @@
             </select>
         </td>
         <td class="Active">
-          <div class="state"
+          <div class="edit-plugin__state"
                data-field="active"
                data-id="3">
             <input type="checkbox"
@@ -219,6 +219,9 @@
         checkboxes: {
           active: true
         },
+        ignore: {
+          id: true
+        },
         edit: function (values) {
           $(".edit", this)
             .removeClass('_edit')
@@ -231,6 +234,7 @@
             .removeClass('_save')
             .addClass('_edit')
             .attr('title', 'Edit');
+          console.log(values)
         },
         cancel: function (values) {
           $(".edit", this)

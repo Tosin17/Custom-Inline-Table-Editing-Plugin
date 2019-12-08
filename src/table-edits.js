@@ -9,6 +9,7 @@
       deleteSelector: '.delete',
       maintainWidth: true,
       dropdowns: {},
+      ignore: {},
       edit: function() {},
       save: function() {},
       cancel: function() {},
@@ -63,7 +64,7 @@
       var select = $(this.element).find('select');
       if (select) {
         select
-          .closest('.state')
+          .closest('.edit-plugin__state')
           .append('<span>' + $(':selected', select).text() + '</span>');
         select.hide();
       }
@@ -85,7 +86,7 @@
       var instance = this;
 
       tableModel.forEach(function(el) {
-        var rowId = $('.state', el.element).data('id');
+        var rowId = $('.edit-plugin__state', el.element).data('id');
         if (!rowId) {
           return;
         }
@@ -100,7 +101,7 @@
       var instance = this,
         values = {};
 
-      $('.state', this.element).each(function() {
+      $('.edit-plugin__state', this.element).each(function() {
         var input,
           field = $(this).data('field'),
           value = $(this).text(),
@@ -131,6 +132,10 @@
             .data('old-value', values[field])
             .dblclick(instance._captureEvent);
         } else {
+          if (field in instance.options.ignore) {
+            return;
+          }
+
           $(this).empty();
           input = $('<input type="text" />')
             .val(value)
@@ -147,7 +152,7 @@
 
       this.options.edit.bind(this.element)(values);
       this.clearRowsFromEditMode.bind(this)(
-        $('.state', this.element).data('id')
+        $('.edit-plugin__state', this.element).data('id')
       );
     },
 
@@ -157,7 +162,7 @@
         values = {};
 
       // Foreach <td> with a 'data-field' on this.element --> <tr>
-      $('.state', this.element).each(function() {
+      $('.edit-plugin__state', this.element).each(function() {
         // Get input values
         var value = $(':input', this).val(),
           // Get old alues, so we can revert if `SAVE` fails
@@ -186,6 +191,11 @@
           return;
         }
 
+        if (field in instance.options.ignore) {
+          values[field] = $(this).text();
+          return;
+        }
+
         $(this)
           .empty()
           .text(value);
@@ -204,7 +214,7 @@
 
       instance.editing = false;
 
-      $('.state', this.element).each(function() {
+      $('.edit-plugin__state', this.element).each(function() {
         var value = $(':input', this).data('old-value'),
           field = $(this).data('field');
 
@@ -232,6 +242,10 @@
           return;
         }
 
+        if (field in instance.options.ignore) {
+          return;
+        }
+
         $(this)
           .empty()
           .text(value);
@@ -244,7 +258,7 @@
       var instance = this,
         values = {};
 
-      $('.state', this.element).each(function() {
+      $('.edit-plugin__state', this.element).each(function() {
         var value = $(this).text() || $(':input', this).val(),
           field = $(this).data('field');
 
