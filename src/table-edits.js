@@ -161,7 +161,7 @@
       var instance = this,
         oldValues = {},
         values = {},
-        hasInvalidField;
+        hasEmptyField;
 
       // Foreach <td> with a 'data-field' on this.element --> <tr>
       $('.edit-plugin__state', this.element).each(function() {
@@ -169,14 +169,15 @@
           // Get old alues, so we can revert if `SAVE` fails
           field = $(this).data('field');
 
-        hasInvalidField = !!(
+        hasEmptyField = !!(
           field in instance.options.validations &&
           instance.options.validations[field].isEmpty &&
           !value
         );
 
-        if (hasInvalidField) {
+        if (hasEmptyField) {
           instance.editing = true;
+          alert('Field cannot be empty.');
           return false;
         }
 
@@ -214,7 +215,7 @@
           .text(value);
       });
 
-      if (hasInvalidField) {
+      if (hasEmptyField) {
         return;
       }
       this.options.save.bind(this.element)(oldValues, values);
