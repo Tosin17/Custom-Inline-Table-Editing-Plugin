@@ -9,6 +9,7 @@
       deleteSelector: '.delete',
       maintainWidth: true,
       dropdowns: {},
+      validations: {},
       ignore: {},
       edit: function() {},
       save: function() {},
@@ -159,15 +160,27 @@
     save: function() {
       var instance = this,
         oldValues = {},
-        values = {};
+        values = {},
+        hasInvalidField;
 
       // Foreach <td> with a 'data-field' on this.element --> <tr>
       $('.edit-plugin__state', this.element).each(function() {
-        // Get input values
         var value = $(':input', this).val(),
           // Get old alues, so we can revert if `SAVE` fails
-          oldValue = $(':input', this).data('old-value'),
           field = $(this).data('field');
+
+        hasInvalidField = !!(
+          field in instance.options.validations &&
+          instance.options.validations[field].isEmpty &&
+          !value
+        );
+
+        if (hasInvalidField) {
+          instance.editing = true;
+          return false;
+        }
+
+        var oldValue = $(':input', this).data('old-value');
 
         // Store input values in object with approate key
         values[field] = value;
@@ -201,7 +214,11 @@
           .text(value);
       });
 
+      if (hasInvalidField) {
+        return;
+      }
       this.options.save.bind(this.element)(oldValues, values);
+      instance.editing = false;
     },
 
     cancel: function() {
