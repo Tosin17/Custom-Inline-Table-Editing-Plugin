@@ -18,6 +18,7 @@
     };
 
   var tableModel = [];
+  var inputVals = false;
 
   function Editable(element, options) {
     this.element = element;
@@ -84,8 +85,6 @@
     },
 
     clearRowsFromEditMode: function(id) {
-      var instance = this;
-
       tableModel.forEach(function(el) {
         var rowId = $('.edit-plugin__state', el.element).data('id');
         if (!rowId) {
@@ -161,12 +160,17 @@
       var instance = this,
         oldValues = {},
         values = {},
-        hasEmptyField;
+        hasEmptyField,
+        hasDuplicate;
 
-      // Foreach <td> with a 'data-field' on this.element --> <tr>
+      inputVals = $('[data-field="name"]')
+        .map(function() {
+          return $(this).text();
+        })
+        .get();
+
       $('.edit-plugin__state', this.element).each(function() {
         var value = $(':input', this).val(),
-          // Get old alues, so we can revert if `SAVE` fails
           field = $(this).data('field');
 
         hasEmptyField = !!(
@@ -175,24 +179,24 @@
           !value
         );
 
-        if (hasEmptyField) {
+        hasDuplicate = !!inputVals.find(el => el === value);
+
+        if (hasEmptyField || hasDuplicate) {
           instance.editing = true;
-          alert('Field cannot be empty.');
+          hasEmptyField
+            ? alert('Field cannot be empty.')
+            : alert('No duplicate values');
           return false;
         }
 
         var oldValue = $(':input', this).data('old-value');
 
-        // Store input values in object with approate key
         values[field] = value;
-        // Store old values
         oldValues[field] = oldValue;
 
         if (instance.options.checkboxes.hasOwnProperty(field)) {
-          // Update checkbox value
           var checkbox = $(this).find(':checkbox');
           values[field] = checkbox.is(':checked') ? checkbox.val() : null;
-          // Disable checkbox
           $(':checkbox', this).attr('disabled', true);
           return;
         }
@@ -215,7 +219,7 @@
           .text(value);
       });
 
-      if (hasEmptyField) {
+      if (hasEmptyField || hasDuplicate) {
         return;
       }
       this.options.save.bind(this.element)(oldValues, values);
